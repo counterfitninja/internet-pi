@@ -136,6 +136,18 @@ Do the same thing for any of the other optional directories added by this projec
 
 You can then delete the `internet-monitoring`, `pi-hole`, etc. folders and everything will be gone from your system.
 
+## Interesting urls
+
+Note: replace `localhost` with your docker host ip/name if not running this locally.
+
+http://localhost:9090/targets shows status of monitored targets as seen from prometheus - in this case which hosts being pinged and speedtest. note: speedtest will take a while before it shows as UP as it takes ~30s to respond.
+
+http://localhost:9090/graph?g0.expr=probe_http_status_code&g0.tab=1 shows prometheus value for `probe_http_status_code` for each host. You can edit/play with additional values. Useful to check everything is okey in prometheus (in case Grafana is not showing the data you expect).
+
+http://localhost:9115 blackbox exporter endpoint. Lets you see what have failed/succeded.
+
+http://localhost:9696/metrics speedtest exporter endpoint. Does take ~30 seconds to show its result as it runs an actual speedtest when requested.
+
 ## License
 
 MIT

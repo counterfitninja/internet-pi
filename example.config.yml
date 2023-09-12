@@ -28,6 +28,7 @@ monitoring_ping_hosts:  # [URL];[HUMAN_READABLE_NAME]
     - https://host.ehosted.co.uk/;games.ehosted.com
     - https://www.bbc.co.uk/;bbc.co.uk
     - https://azure.ehosted.co.uk/;ehosted.co.uk
+    - https://games.ehosted.co.uk/;games.ehosted.co.uk
 # Prometheus configuration.
 prometheus_monitor_prometheus: false
 prometheus_node_exporter_targets:

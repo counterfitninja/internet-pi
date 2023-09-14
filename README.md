@@ -72,7 +72,7 @@ To find the dashboard, navigate to Dashboards, click Browse, then go to the Inte
 A number of default Prometheus job configurations are included out of the box, but if you would like to add more to the `prometheus.yml` file, you can add a block of text that will be added to the end of the `scrape_configs` using the `prometheus_extra_scrape_configs` variable, for example:
 
 ```yaml
-prometheus_extra_scrape_configs: |
+prometheus_extra_scrape_configs: 
   - job_name: 'customjob'
     scrape_interval: 5s
     static_configs:
@@ -87,7 +87,26 @@ prometheus_node_exporter_targets:
   # Add more targets here
   - 'another-server.local:9100'
 ```
-
+If you want to remove ping data from Promethus then run the following after adding
+  
+```yml
+  prometheus:
+    image: prom/prometheus:latest
+    restart: always
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - ./prometheus/:/etc/prometheus/
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time={{ prometheus_tsdb_retention_time }}'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+      - '--web.enable-admin-api'
+ ```    
+      #
+curl -X POST -g 'http://192.168.174.199:9090/api/v1/admin/tsdb/delete_series?match[]={instance="https://games.ehosted.co.uk/"}'
 ## Updating
 
 ### pi-hole
